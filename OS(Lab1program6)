@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+void deletion(int a[], int size)
+{
+    int pos,i;
+    printf("Enter the position:");
+    scanf("%d",&pos);
+
+    for (int i = pos; i <size; i++)
+    {
+
+            a[i]=a[i+1];
+
+
+    }
+
+}
+
+int main()
+{
+    int a[100], size;
+
+    printf("Enter the number of elements: ");
+    scanf("%d", &size);
+
+
+    if (size > 100) {
+        printf("The number of elements cannot exceed 100.\n");
+        return 1;
+    }
+
+
+    for (int i = 0; i < size; i++)
+    {
+        printf("Enter element %d: ", i + 1);
+        scanf("%d", &a[i]);
+    }
+
+
+    deletion(a, size);
+
+    for (int i = 0; i < size-1; i++)
+    {
+        printf("%d \n",a[i]);
+
+    }
+
+}
+
+
+
