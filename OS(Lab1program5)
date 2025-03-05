@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+int secondlargest(int a[], int size)
+{
+    int temp;
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = i + 1; j < size; j++)
+        {
+            if (a[j] < a[i])
+            {
+                temp = a[j];
+                a[j] = a[i];
+                a[i] = temp;
+            }
+        }
+    }
+    return a[size-2];
+}
+
+int main()
+{
+    int a[100], ll, size;
+
+    printf("Enter the number of elements: ");
+    scanf("%d", &size);
+
+
+    if (size > 100) {
+        printf("The number of elements cannot exceed 100.\n");
+        return 1;
+    }
+
+
+    for (int i = 0; i < size; i++)
+    {
+        printf("Enter element %d: ", i + 1);
+        scanf("%d", &a[i]);
+    }
+
+
+    ll = secondlargest(a, size);
+
+
+    printf("Second largest: %d\n", ll);
+
+    return 0;
+}
