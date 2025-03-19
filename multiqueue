@@ -1,0 +1,102 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+#define MAX 10
+
+typedef struct{
+
+    int pid;
+    int arrival;
+    int burst;
+
+}Process;
+
+void sortByArrival(Process p[],int n)
+{
+
+    for(int i=0;i<n-1;i++)
+    {
+
+        for(int j=0;j<n-i-1;j++)
+        {
+
+            if(p[j].arrival>p[j+1].arrival)
+            {
+
+                Process temp=p[j];
+                p[j]=p[j+1];
+                p[j+1]=temp;
+            }
+        }
+    }
+}
+
+void fcfsscheduling(Process p[],int n)
+{
+
+    int completiontime=0,totalwait=0,totalturnaround=0;
+
+    for(int i=0;i<n;i++)
+    {
+
+        if(completiontime<p[i].arrival)
+        {
+            completiontime=p[i].arrival;
+        }
+    completiontime =p[i].burst;
+    int turnaround =completiontime-p[i].arrival;
+    int waiting=turnaround-p[i].burst;
+    totalwait+=waiting;
+    totalturnaround+=turnaround;
+
+    printf("%d%d%d%d%d%d",p[i].pid,p[i].arrival,p[i].burst,completiontime,turnaround,waiting);
+    }
+
+    printf("Avg waiting time :%2f",(float)totalwait/n);
+    printf("Avg Turnaroundtime:%2f",(float)totalturnaround/n);
+
+}
+
+void multilevelqueue(Process sys[],int sysCount,Process user[],int userCount)
+{
+
+    printf("\n System Process Queue- Highest priority");
+    fcfsscheduling(sys,sysCount);
+
+    printf("\n User Process Queue - Lowest priority");
+    fcfsscheduling(user,userCount);
+}
+
+int main()
+{
+
+    Process sysQueue[MAX],userQueue[MAX];
+    int sysCount=0,userCount=0,n;
+
+    printf("Enter the number of processes");
+    scanf("%d",&n);
+
+    printf("Enter process details ");
+    for(int i=0;i<n;i++)
+    {
+
+        int type;
+        Process temp;
+        scanf("%d%d%d%d",&temp.pid,&temp.arrival,&temp.burst,&type);
+
+        if(type==1)
+        {
+
+            sysQueue[sysCount++]=temp;
+
+        }
+        else
+        {
+
+            userQueue[userCount++]=temp;
+        }
+    }
+    sortByArrival(sysQueue,sysCount);
+    sortByArrival(userQueue,userCount);
+    multilevelqueue(sysQueue,sysCount,userQueue,userCount);
+}
